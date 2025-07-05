@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: auth_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: authdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - auth_pgdata:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  app:
+    build: .                            # Текущая папка (auth-service)
+    container_name: auth_service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: "postgresql://postgres:postgres@postgres:5432/authdb"
+      PORT: 8080
+    networks:
+      - app-network
+
+volumes:
+  auth_pgdata:
+
+networks:
+  app-network:
+    driver: bridge
