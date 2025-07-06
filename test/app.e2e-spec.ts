@@ -25,6 +25,7 @@ describe('UserController (e2e)', () => {
   });
 
   it('/user/getList (GET) — ❌ without token', () => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     return request(app.getHttpServer()).get('/user/getList').expect(401); // 👈 ожидаем неавторизованный
   });
 

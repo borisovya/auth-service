@@ -1,5 +1,5 @@
 import * as dotenv from 'dotenv';
 
-export default async () => {
+export default () => {
   dotenv.config({ path: '.env.test' });
 };
